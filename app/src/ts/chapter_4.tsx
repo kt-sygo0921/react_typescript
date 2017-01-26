@@ -1,19 +1,13 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
-//3章　JSX
-var TextInput = React.createClass({
-    render: function(){
+export var TextInput = React.createClass({
+    render: function(): JSX.Element {
         return <div>JSX Input:<input type="text" defaultValue="入力欄"></input></div>
     }
 });
 
-ReactDom.render(
-    <TextInput />,
-    document.getElementById('render_input1')
-);
-
-var TextInput2 = React.createClass({
+export var TextInput2 = React.createClass({
     getInitialState:function():Object {
         return {disptext:'入力欄'}
     },
@@ -27,7 +21,6 @@ var TextInput2 = React.createClass({
     }
 })
 
-ReactDom.render(
-    <TextInput2 />,
-    document.getElementById('render_input2')
-);
+
+
+

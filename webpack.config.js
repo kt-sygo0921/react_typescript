@@ -1,46 +1,76 @@
+const webpack = require('webpack');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const glob = require('glob');
+const autoprefixer = require('autoprefixer');
+const precss = require('precss');
 
-
-// const target_path = {
-//     target_ts: ,
-//     target_sass: path.join(basePath + 'scss/*.scss'),
-//     target_ejs: basePath + 'ejs/*.ejs'
-// }
-
-//共通設定
-const basePath = path.resolve(__dirname,'app/src/ts/');
-const re = basePath.replace(/\\/g,'/'); //ファイルパス書き換え※windows用
-
-const target_ts = glob.sync(path.resolve(__dirname, 'app/src/ts/**/{*.ts*,*.tsx}'), {ignore:path.resolve(__dirname, 'app/src/ts/**/{_*.ts,_*.tsx}')});
-const entries_ts = {};
-
-target_ts.forEach(value => {
-    var key = value.replace(re , '');
-    key = key.replace(/\//, ''); //先頭に付与される/を削除
-    key = key.replace(/.tsx/,'.js'); //拡張子書き換え
-    key = key.replace(/.ts/,'.js'); //拡張子書き換え
-    entries_ts[key] = value;
-})
-
-module.exports = {
-    entry: entries_ts,
+module.exports = [{
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js']
+    },
+    entry: {
+        main:'./app/src/ts/main.tsx'
+    },
     output: {
-        path: path.join(__dirname , '/app/view/js'),
-        filename: "[name]",
-        resolve: {
-            root:[path.join(__dirname,'node_modules')],
-            extensions: [".ts", ".tsx",]
-        }
+        publicPath:'',
+        path: path.join(__dirname , './app/view/js/'),
+        filename: "[name].js",
     },
     module: {
-        loaders: [
-             {
-                test: /\.ts(x?)$/,
-                exclude: /node_modules/,
-                loader: 'ts-loader'
+        rules:[{
+            test: /\.tsx?$/,
+            exclude: /node_modules/,
+            use:[
+                {
+                    loader: 'ts-loader'
+                }
+            ],
+        }]
+    },
+}
+,{
+    resolve: {
+        extensions:['.css','.scss']
+    },
+    entry: {
+        bundle:'./app/src/sass/bundle.scss',
+    },
+    output: {
+        path: path.join(__dirname , '/app/view/css'),
+        filename: "[name].css"
+    },
+    module: {
+        rules:[
+            {
+                test:/\.(css|scss)$/,
+                use: ExtractTextPlugin.extract({
+                    fallbackLoader: 'style-loader',
+                    loader:["css-loader","postcss-loader"]
+                })
             }
         ]
-    }
-};
+    },
+    plugins: [
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss:[
+                    require('autoprefixer')({
+                        browsers: ['IE 9', 'IE 10', 'IE 11', 'last 2 versions']
+                    })
+                ]
+            }
+        }),
+        new ExtractTextPlugin("[name].css"),
+        new BrowserSyncPlugin({
+            server: { baseDir: ['./app'] },
+            directory: true,
+            files:[
+                'app/view/js/*.js',
+                'app/view/css/*.css'
+            ]
+        })
+    ]
+ }
+];
