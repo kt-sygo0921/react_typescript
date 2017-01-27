@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import {HelloWorld,Evaluator,RandomColor,ColoredButton} from './chapter_3';
-import {TextInput,TextInput2} from './chapter_4';
+import {TextInput,TextInput2,RadioButton,CheckBox} from './chapter_4';
 
 
 //chapter03
@@ -80,7 +80,18 @@ try{
         <TextInput2 />,
         document.getElementById('render_input2')
     );
+
+    ReactDom.render(
+        <RadioButton />,
+        document.getElementById('render_input3')
+    )
+    ReactDom.render(
+        <CheckBox />,
+        document.getElementById('render_input4')
+    )
+
 }
 catch(e) {
     console.log('4章は読み込まれていません')
 }
+
