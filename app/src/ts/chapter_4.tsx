@@ -83,8 +83,9 @@ interface hoge {
 export class CheckBox_class extends React.Component <hoge,any>{
     constructor() {
         super()
+        this.state = {selection:['first']}
     }
-    private handleChang(e):void {
+    private handleChange(e):void {
         var selection = this.state.selection;
         var position = selection.indexOf(e.target.value);
         if(e.target.checked) {
@@ -95,7 +96,19 @@ export class CheckBox_class extends React.Component <hoge,any>{
         this.setState({selection:selection})
         console.log(this.state.selection);
     }
-    render() {
-        return ()
+    render():JSX.Element {
+        return (
+            <div>いくつでも選んでください：
+                <div>
+                    <input type="checkBox" value="first" checked={this.state.selection.indexOf('first') !== -1} onChange={this.handleChange} />最初の選択
+                </div>
+                <div>
+                    <input type="checkBox" value="second" checked={this.state.selection.indexOf('second') !== -1} onChange={this.handleChange} />最初の選択
+                </div>
+                <div>
+                    <input type="checkBox" value="third" checked={this.state.selection.indexOf('third') !== -1} onChange={this.handleChange} />最初の選択
+                </div>
+            </div>
+        )
     }
 }
