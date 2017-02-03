@@ -3,7 +3,7 @@
         "module": "commonjs",
         "target": "es5",
         "outDir": "./app/view/js/es6",
-        "sourceMap": false,
+        "sourceMap": true,
         "jsx": "react"
     },
     "files": [

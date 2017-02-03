@@ -18,6 +18,7 @@ module.exports = [{
         path: path.join(__dirname , './app/view/js/'),
         filename: "[name].js",
     },
+    devtool: 'inline-source-map',
     module: {
         rules:[{
             test: /\.tsx?$/,

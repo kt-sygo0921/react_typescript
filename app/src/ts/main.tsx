@@ -1,7 +1,14 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import {HelloWorld,Evaluator,RandomColor,ColoredButton} from './chapter_3';
-import {TextInput,TextInput2,RadioButton,CheckBox} from './chapter_4';
+import {TextInput,TextInput2,RadioButton,CheckBox,CheckBox_class,CheckBox_class2,SingleSelection,MultiSelection,FormSubmit,SimpleTable,DispTable,TableHeader,MultiTable} from './chapter_4';
+
+//テストデータ
+var tableColumns = ['名前','地域', '番号'];
+var tableData = [
+    {id:1,name:'山田太郎',area:'東京都港区',number:8513321},
+    {id:2,name:'山田あああ',area:'東京都港区',number:8513325}
+]
 
 
 //chapter03
@@ -86,12 +93,46 @@ try{
         document.getElementById('render_input3')
     )
     ReactDom.render(
-        <CheckBox />,
+        <CheckBox_class />,
         document.getElementById('render_input4')
     )
-
+    ReactDom.render(
+        <CheckBox_class2  selection={['second', 'third']}/>,
+        document.getElementById('render_input5')
+    )
+    ReactDom.render(
+        <SingleSelection selection={'first'} />,
+        document.getElementById('render_input6')
+    )
+    ReactDom.render(
+        <MultiSelection selection={['first','second']} />,
+        document.getElementById('render_input7')
+    )
+    ReactDom.render(
+        <FormSubmit selection={['first']} />,
+        document.getElementById('render_input8')
+    )
+    ReactDom.render(
+        <SimpleTable />,
+        document.getElementById('render_table1')
+    )
+    ReactDom.render(
+        <DispTable data={tableData}/>,
+        document.getElementById('render_table2')
+    )
+    ReactDom.render(
+        <MultiTable title={tableColumns} data={tableData} />,
+        document.getElementById('render_table3')
+    )
 }
 catch(e) {
     console.log('4章は読み込まれていません')
 }
 
+//chapter05
+try {
+
+}
+catch(e) {
+    console.log('5章は読み込まれていません')
+}
